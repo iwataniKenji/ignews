@@ -1,5 +1,5 @@
 // tipagem da função
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 
 import Image from "next/image";
 import avatarImg from "../../public/images/avatar.svg";
@@ -41,7 +41,9 @@ export default function Home({ product }: HomeProps) {
 }
 
 // executado na camada de node.js do next
-export const getServerSideProps: GetServerSideProps = async () => {
+// GetServerSideProps -> server side render (ssr)
+// GetStaticProps -> static site generation (ssg)
+export const getStaticProps: GetStaticProps = async () => {
   // retrieve -> busca apenas um
   const price = await stripe.prices.retrieve("price_1Kgc7nGHxfJecL8MmyS7kfbV");
 
@@ -57,5 +59,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
     props: {
       product,
     },
+    revalidate: 60 * 60 * 24, // 24 horas
   };
 };
