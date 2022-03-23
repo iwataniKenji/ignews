@@ -1,11 +1,22 @@
+// tipagem da função
+import { GetServerSideProps } from "next";
+
 import Image from "next/image";
 import avatarImg from "../../public/images/avatar.svg";
 import Head from "next/head";
 
 import styles from "./home.module.scss";
-import { SubscribeButton } from '../components/SubscribeButton';
+import { SubscribeButton } from "../components/SubscribeButton";
+import stripe from "stripe";
 
-export default function Home() {
+interface HomeProps {
+  product: {
+    priceId: string;
+    amount: number;
+  };
+}
+
+export default function Home({ product }: HomeProps) {
   return (
     <>
       <Head>
@@ -19,12 +30,32 @@ export default function Home() {
           </h1>
           <p>
             Get access to all the publications <br />
-            <span>for $9.90 month</span>
+            <span>for {product.amount} month</span>
           </p>
-          <SubscribeButton />
+          <SubscribeButton priceId={product.priceId} />
         </section>
         <Image src={avatarImg} alt="Girl coding" />
       </main>
     </>
   );
 }
+
+// executado na camada de node.js do next
+export const getServerSideProps: GetServerSideProps = async () => {
+  // retrieve -> busca apenas um
+  const price = await stripe.prices.retrieve("price_1Kgc7nGHxfJecL8MmyS7kfbV");
+
+  const product = {
+    priceId: price.id,
+    amount: new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(price.unit_amount / 100),
+  };
+
+  return {
+    props: {
+      product,
+    },
+  };
+};
