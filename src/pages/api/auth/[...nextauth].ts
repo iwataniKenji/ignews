@@ -20,12 +20,11 @@ export default NextAuth({
   
   // funções executadas automaticamente quando acontece alguma ação
   callbacks: {
-    async signIn(user, account, profile) {
+    async signIn({user, account, profile}) {
       const { email } = user;
 
       try {
         await fauna.query(
-          
           // se não existe usuário com...
           q.If(
             q.Not(
