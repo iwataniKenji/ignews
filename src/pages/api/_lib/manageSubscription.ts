@@ -5,11 +5,9 @@ import { query as q } from "faunadb";
 // salva informações no banco de dados
 export async function saveSubscription(
   subscriptionId: string,
-  customerId: string
+  customerId: string,
+  createAction: boolean = false
 ) {
-  // buscar o usuário no banco do FaunaDB com o id {customerId}
-  // salvar os dados da subscription no FaunaDB
-
   const userRef = await fauna.query(
     q.Select(
       "ref",
@@ -28,10 +26,25 @@ export async function saveSubscription(
     price_id: subscription.items.data[0].price.id,
   };
 
-  // salvar dados no banco de dados
-  await fauna.query(
-    q.Create(q.Collection("subscriptions"), {
-      data: subscriptionData,
-    })
-  );
+  if (createAction) {
+    // se criando nova subscription -> salvar no banco
+    await fauna.query(
+      q.Create(q.Collection("subscriptions"), {
+        data: subscriptionData,
+      })
+    );
+  } else {
+    // se atualizando subscription -> busca pela ref e troca todos os dados
+    await fauna.query(
+      q.Replace(
+        q.Select(
+          "ref",
+          q.Get(q.Match(q.Index("subscription_by_id"), subscriptionId))
+        ),
+        {
+          data: subscriptionData,
+        }
+      )
+    );
+  }
 }
