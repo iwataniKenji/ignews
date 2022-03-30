@@ -17,10 +17,49 @@ export default NextAuth({
       },
     }),
   ],
-  
+
   // funções executadas automaticamente quando acontece alguma ação
   callbacks: {
-    async signIn({user, account, profile}) {
+    // permite modificar os dados do session
+    async session(session) {
+      try {
+        const userActiveSubscription = await fauna.query(
+          q.Get(
+            // interseção = subscription que bate com o "ref" do usuário e está com status "active"
+            q.Intersection([
+              q.Match(
+                q.Index("subscription_by_user_ref"),
+                // seleciona apenas o "ref" do usuário pesquisado através do email
+                q.Select(
+                  "ref",
+                  q.Get(
+                    q.Match(
+                      q.Index("user_by_email"),
+                      q.Casefold(session.user.email)
+                    )
+                  )
+                )
+              ),
+              q.Match(
+                q.Index('subscription_by_status'),
+                "active"
+              )
+            ])
+          )
+        );
+  
+        return {
+          ...session,
+          activeSubscription: userActiveSubscription
+        }
+      } catch {
+        return {
+          ...session,
+          activeSubscription: null,
+        }
+      }
+    },
+    async signIn({ user, account, profile }) {
       const { email } = user;
 
       try {
@@ -30,32 +69,22 @@ export default NextAuth({
             q.Not(
               q.Exists(
                 q.Match(
-                  q.Index('user_by_email'),
+                  q.Index("user_by_email"),
                   // esse email...
                   q.Casefold(user.email)
                 )
               )
             ),
             // crie um usuário com esse email
-            q.Create(
-              q.Collection("users"),
-              { data: { email } }
-            ),
+            q.Create(q.Collection("users"), { data: { email } }),
             // do contrário, busque seu referente
-            q.Get(
-              q.Match(
-                q.Index('user_by_email'),
-                q.Casefold(user.email)
-              )
-            )
+            q.Get(q.Match(q.Index("user_by_email"), q.Casefold(user.email)))
           )
-        )
+        );
 
         // true = login deu certo
         return true;
-
       } catch {
-
         // false = login deu errado
         return false;
       }
