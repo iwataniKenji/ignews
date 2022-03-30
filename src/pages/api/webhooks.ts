@@ -87,11 +87,12 @@ export default async function webhooks(
             throw new Error("Unhandled event.");
         }
       } catch (err) {
-        return res.json({ error: "Webhook handler failed." });
+        console.log(err);
+        return res.status(400).json({ error: "Webhook handler failed." });
       }
     }
 
-    res.json({ received: true });
+    res.status(200).json({ received: true });
   } else {
     res.setHeader("Allow", "POST");
     res.status(405).end("Method now allowed");

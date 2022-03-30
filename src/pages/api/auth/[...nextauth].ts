@@ -21,7 +21,7 @@ export default NextAuth({
   // funções executadas automaticamente quando acontece alguma ação
   callbacks: {
     // permite modificar os dados do session
-    async session(session) {
+    async session({ session }) {
       try {
         const userActiveSubscription = await fauna.query(
           q.Get(
@@ -40,23 +40,20 @@ export default NextAuth({
                   )
                 )
               ),
-              q.Match(
-                q.Index('subscription_by_status'),
-                "active"
-              )
+              q.Match(q.Index("subscription_by_status"), "active"),
             ])
           )
         );
-  
+
         return {
           ...session,
-          activeSubscription: userActiveSubscription
-        }
+          activeSubscription: userActiveSubscription,
+        };
       } catch {
         return {
           ...session,
           activeSubscription: null,
-        }
+        };
       }
     },
     async signIn({ user, account, profile }) {
