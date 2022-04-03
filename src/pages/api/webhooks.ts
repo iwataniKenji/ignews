@@ -6,15 +6,12 @@ import { stripe } from "../../services/stripe";
 import { saveSubscription } from "./_lib/manageSubscription";
 
 async function buffer(readable: Readable) {
-  // pedaços da stream
   const chunks = [];
 
-  // recebendo valor de requisição -> salvando em chunk
   for await (const chunk of readable) {
     chunks.push(typeof chunk === "string" ? Buffer.from(chunk) : chunk);
   }
 
-  // faz merge de Buffer e chunks
   return Buffer.concat(chunks);
 }
 
@@ -24,7 +21,7 @@ export const config = {
   },
 };
 
-// eventos a serem ouvidos
+// events to be listened
 const relevantEvents = new Set([
   "checkout.session.completed",
   "customer.subscription.updated",
@@ -42,14 +39,12 @@ export default async function webhooks(
     let event: Stripe.Event;
 
     try {
-      // construir objeto de evento
       event = stripe.webhooks.constructEvent(
         buf,
         secret,
         process.env.STRIPE_WEBHOOK_SECRET
       );
     } catch (err) {
-      // bad request
       return res.status(400).send(`Webhook error: ${err.message}`);
     }
 
@@ -58,7 +53,7 @@ export default async function webhooks(
     if (relevantEvents.has(type)) {
       try {
         switch (type) {
-          // entidade subscriptions
+          // subscriptions entity
           case "customer.subscription.updated":
           case "customer.subscription.deleted":
             const subscription = event.data.object as Stripe.Subscription;
@@ -71,7 +66,7 @@ export default async function webhooks(
 
             break;
 
-          // entidade session
+          // session entity
           case "checkout.session.completed":
             const checkoutSession = event.data
               .object as Stripe.Checkout.Session;

@@ -43,7 +43,6 @@ export default function Posts({ posts }: PostsProps) {
   );
 }
 
-// página estática -> menos consumo de banda
 export const getStaticProps: GetStaticProps = async () => {
   const prismic = getPrismicClient();
 

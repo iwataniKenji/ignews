@@ -8,7 +8,8 @@
 
 <p align="center">
     <a href="#about">📙 About</a>
-    <!-- <a href="#preview">🖼️ Preview</a> -->
+    <a href="#preview">🖼️ Preview</a>
+    <a href="#start">📖 How to Start</a>
     <a href="#features">💡 Features</a>
     <a href="#technologies">💻 Technologies</a>
 </p>
@@ -23,13 +24,47 @@
 <p>The access is allowed though a payed monthly subscription and the authentication uses Github to get the user's basic information.</p>
 <p>This project is originally created on Ignite from <a href="https://www.rocketseat.com.br/">Rocketseat</a> and made by <a href="https://www.linkedin.com/in/kleverson-kenji-iwatani/">Kenji Iwatani</a></p>
 
-<!-- ---
+---
 
 <H2 id="preview">🖼️ Preview</H2>
 
 <section align="center">
-    <img alt="ignews website overview" src="preview.gif"/>
-</section> -->
+    <img alt="ignews website overview" src="./public/images/preview.gif"/>
+</section>
+
+---
+
+<H2 id="start">📖 How to Start</H2>
+
+<h3>Starting this repository:</h3>
+
+```bash
+# Clone this repository
+$ git clone https://github.com/iwataniKenji/ignews
+
+# Access the project directory
+$ cd ignews
+```
+
+<h3>Creating and setting the project:</h3>
+<p>It's required an account on <a href="https://stripe.com/">Stripe</a> (for payment system), <a href="https://fauna.com/">Fauna</a> (for database functionality), and <a href="https://prismic.io/">Prismic</a> (to create publications of the website).</p>
+
+```bash
+# Install dependencies
+$ yarn
+
+# On ".env.example" file, fill the environment variables according to the instructions provided
+$
+
+# Rename the config file 
+$ ren ".env.example" ".env.local"
+
+# Execute stripe to listen the events from webhooks
+$ stripe listen --forward-to localhost:3000/api/webhooks 
+
+# Initialize and open local host
+$ yarn dev
+```
 
 ---
 

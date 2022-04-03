@@ -2,7 +2,7 @@ import { stripe } from "./../../../services/stripe";
 import { fauna } from "./../../../services/fauna";
 import { query as q } from "faunadb";
 
-// salva informações no banco de dados
+// save information on database
 export async function saveSubscription(
   subscriptionId: string,
   customerId: string,
@@ -15,10 +15,10 @@ export async function saveSubscription(
     )
   );
 
-  // buscar todos os dados da subscription
+  // retrieve all data from subscription
   const subscription = await stripe.subscriptions.retrieve(subscriptionId);
 
-  // escolhendo apenas os dados importantes a ser guardados no banco de dados
+  // choosing only most important data to save on database
   const subscriptionData = {
     id: subscription.id,
     userId: userRef,
@@ -27,14 +27,14 @@ export async function saveSubscription(
   };
 
   if (createAction) {
-    // se criando nova subscription -> salvar no banco
+    // if it's a new subscription -> save on db
     await fauna.query(
       q.Create(q.Collection("subscriptions"), {
         data: subscriptionData,
       })
     );
   } else {
-    // se atualizando subscription -> busca pela ref e troca todos os dados
+    // if this subscription already exists -> search for ref and change data
     await fauna.query(
       q.Replace(
         q.Select(

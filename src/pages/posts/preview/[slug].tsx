@@ -23,7 +23,6 @@ export default function PostPreview({ post }: PostPreviewProps) {
   const { data: session } = useSession();
   const router = useRouter();
 
-  // efeito disparado se session mudar
   useEffect(() => {
     if (session?.activeSubscription) {
       router.push(`/posts/${post.slug}`);
@@ -61,23 +60,20 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [],
     fallback: "blocking",
-    // true = se ainda não gerado estático, carrega post pelo lado do cliente
-    // false = se ainda não gerado estático, retorna 404
-    // blocking = se ainda não gerado estático, carrega conteúdo na camada do next (ssr)
   };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  // guardar slug
+  // save slug
   const { slug } = params;
 
-  // cliente do prismic
+  // prismic client
   const prismic = getPrismicClient();
 
-  // buscar pelo slug
+  // search for slug
   const response = await prismic.getByUID("publication", String(slug), {});
 
-  // formatação dos dados
+  // data formatting
   const post = {
     slug,
     title: RichText.asText(response.data.title),

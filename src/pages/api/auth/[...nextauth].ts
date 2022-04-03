@@ -18,18 +18,16 @@ export default NextAuth({
     }),
   ],
 
-  // funções executadas automaticamente quando acontece alguma ação
+  // function executed automatically when some action happens
   callbacks: {
-    // permite modificar os dados do session
     async session({ session }) {
       try {
         const userActiveSubscription = await fauna.query(
           q.Get(
-            // interseção = subscription que bate com o "ref" do usuário e está com status "active"
+            // intersection = same user's ref and active status at the same time
             q.Intersection([
               q.Match(
                 q.Index("subscription_by_user_ref"),
-                // seleciona apenas o "ref" do usuário pesquisado através do email
                 q.Select(
                   "ref",
                   q.Get(
@@ -61,7 +59,6 @@ export default NextAuth({
 
       try {
         await fauna.query(
-          // se não existe usuário com...
           q.If(
             q.Not(
               q.Exists(
@@ -72,17 +69,15 @@ export default NextAuth({
                 )
               )
             ),
-            // crie um usuário com esse email
+            // create a user with this email
             q.Create(q.Collection("users"), { data: { email } }),
-            // do contrário, busque seu referente
+            // otherwise, search the user by email
             q.Get(q.Match(q.Index("user_by_email"), q.Casefold(user.email)))
           )
         );
 
-        // true = login deu certo
         return true;
       } catch {
-        // false = login deu errado
         return false;
       }
     },

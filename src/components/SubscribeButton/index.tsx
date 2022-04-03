@@ -9,7 +9,6 @@ export function SubscribeButton() {
   const router = useRouter();
 
   async function handleSubscribe() {
-    // se não houver sessão -> autenticar
     if (!session) {
       signIn("github");
       return;
@@ -21,7 +20,6 @@ export function SubscribeButton() {
     }
 
     try {
-      // subscribe = nome do arquivo
       const response = await api.post("/subscribe");
 
       const { sessionId } = response.data;

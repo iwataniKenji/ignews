@@ -41,13 +41,12 @@ export const getServerSideProps: GetServerSideProps = async ({
   req,
   params,
 }) => {
-  // buscar cookies para checar se usuário está logado
+  // check if user still logged in
   const session = await getSession({ req });
 
-  // guardar slug
   const { slug } = params;
 
-  // direciona para home caso não esteja logado
+  // redirects to home if user isn't logged in
   if (!session?.activeSubscription) {
     return {
       redirect: {
@@ -57,13 +56,10 @@ export const getServerSideProps: GetServerSideProps = async ({
     };
   }
 
-  // cliente do prismic
   const prismic = getPrismicClient(req);
 
-  // buscar pelo slug
   const response = await prismic.getByUID("publication", String(slug), {});
 
-  // formatação dos dados
   const post = {
     slug,
     title: RichText.asText(response.data.title),

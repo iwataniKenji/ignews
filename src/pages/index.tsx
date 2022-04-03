@@ -41,9 +41,6 @@ export default function Home({ product }: HomeProps) {
   );
 }
 
-// executado na camada de node.js do next
-// GetServerSideProps -> server side render (ssr)
-// GetStaticProps -> static site generation (ssg)
 export const getStaticProps: GetStaticProps = async () => {
   const price = await stripe.prices.retrieve("price_1Kgc7nGHxfJecL8MmyS7kfbV");
 

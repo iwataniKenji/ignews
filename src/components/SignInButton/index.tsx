@@ -7,9 +7,6 @@ import styles from "./styles.module.scss";
 export function SignInButton() {
   const { data: session } = useSession();
 
-  // retorna expires e user (email, image, name)
-  console.log(session);
-
   return session ? (
     <button
       type="button"

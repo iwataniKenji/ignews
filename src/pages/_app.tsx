@@ -5,7 +5,7 @@ import { SessionProvider as NextAuthProvider } from "next-auth/react";
 
 import "../styles/global.scss";
 
-// App é carregado completamente toda vez que usuário troca de tela
+// App is fully reloaded everytime user changes screen
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <NextAuthProvider session={pageProps.session}>
