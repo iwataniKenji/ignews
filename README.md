@@ -1,8 +1,6 @@
 <section align="center">
-    <img src="./public/images/logo.png" />
+    <img src="./public/images/cover.jpg" />
 </section>
-
----
 
 <h2 align="center">Summary</h2>
 
@@ -56,11 +54,11 @@ $ yarn
 # On ".env.example" file, fill the environment variables according to the instructions provided
 $
 
-# Rename the config file 
+# Rename the config file
 $ ren ".env.example" ".env.local"
 
 # Execute stripe to listen the events from webhooks
-$ stripe listen --forward-to localhost:3000/api/webhooks 
+$ stripe listen --forward-to localhost:3000/api/webhooks
 
 # Initialize and open local host
 $ yarn dev
@@ -70,7 +68,7 @@ $ yarn dev
 
 <H2 id="features">💡 Features</H2>
 
-- [X] Static website with SSG
+- [x] Static website with SSG
 - [x] Github authentication
 - [x] Subscription and payment system using Stripe
 - [x] Redirect when not authenticated
