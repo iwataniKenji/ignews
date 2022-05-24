@@ -9,7 +9,7 @@ describe("SignInButton component", () => {
     const useSessionMocked = jest.mocked(useSession);
 
     // sessão nula e loading falso
-    useSessionMocked.mockReturnValueOnce([null, false]);
+    useSessionMocked.mockReturnValueOnce([null, false] as any);
 
     render(<SignInButton />);
 
@@ -19,15 +19,12 @@ describe("SignInButton component", () => {
   test("sign in button is rendering correctly when user is authenticated", () => {
     const useSessionMocked = jest.mocked(useSession);
 
-    useSessionMocked.mockReturnValueOnce([
-      {
-        data: {
-          user: { name: "John Doe", email: "john.doe@example.com" },
-          expires: "fake-expires",
-        },
+    useSessionMocked.mockReturnValueOnce({
+      data: {
+        user: { name: "John Doe", email: "john.doe@example.com" },
+        expires: "fake-expires",
       },
-      false,
-    ]);
+    } as any);
 
     const { debug } = render(<SignInButton />);
     debug();
