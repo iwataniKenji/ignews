@@ -5,16 +5,16 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import styles from "./styles.module.scss";
 
 export function SignInButton() {
-  const { data: session } = useSession();
+  const { data } = useSession();
 
-  return session ? (
+  return data ? (
     <button
       type="button"
       className={styles.signInButton}
       onClick={() => signOut()}
     >
       <FaGithub color="#04d361" />
-      {session.user.name}
+      {data.user.name}
       <FiX color="#737380" className={styles.closeIcon} />
     </button>
   ) : (

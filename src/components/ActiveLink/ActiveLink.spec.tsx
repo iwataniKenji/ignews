@@ -14,7 +14,7 @@ jest.mock("next/router", () => {
 
 // describe = categorização dos testes
 describe("ActiveLink component", () => {
-  test("active link is receiving active class", () => {
+  test("active link is rendering correctly", () => {
     render(
       <ActiveLink href="/" activeClassName="active">
         <a>Home</a>
