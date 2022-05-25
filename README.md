@@ -19,15 +19,24 @@
 <H2 id="about">📙 About</H2>
 
 <p>Ig.news is a serverless website based on Next.js framework usage and has an authentication functionality that allows the user to get access to written content about the ReactJS world if he is logged in or a preview of the original content if he's not.</p>
-<p>The access is allowed though a payed monthly subscription and the authentication uses Github to get the user's basic information.</p>
+<p>The access is allowed trough a payed monthly subscription and the authentication uses Github to get the user's basic information.</p>
+<p>In conclusion, this application was used to implement and learn basic concepts of <strong>unit testing</strong> as well.</p>
 <p>This project is originally created on Ignite from <a href="https://www.rocketseat.com.br/">Rocketseat</a> and made by <a href="https://www.linkedin.com/in/kleverson-kenji-iwatani/">Kenji Iwatani</a></p>
 
 ---
 
 <H2 id="preview">🖼️ Preview</H2>
 
+<h4>Project overview:</h4>
+
 <section align="center">
     <img alt="ignews website overview" src="./public/images/preview.gif"/>
+</section>
+
+<h4>Tests coverage report:</h4>
+
+<section align="center">
+    <img alt="ignews website tests coverage report overview" src="./public/images/tests.png"/>
 </section>
 
 ---
@@ -64,6 +73,13 @@ $ stripe listen --forward-to localhost:3000/api/webhooks
 $ yarn dev
 ```
 
+<h3>Running tests:</h3>
+
+```bash
+# Run tests
+$ yarn test
+```
+
 ---
 
 <H2 id="features">💡 Features</H2>
@@ -76,6 +92,7 @@ $ yarn dev
 - [x] Prevents duplicated customers accounts
 - [x] Posts preview functionality for non-subscribed users
 - [x] Backend independent (serverless website)
+- [x] Unit tests implemented and covering most of the application
 
 ---
 
