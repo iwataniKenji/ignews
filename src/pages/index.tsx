@@ -6,14 +6,13 @@ import { SubscribeButton } from "../components/SubscribeButton";
 import { stripe } from "../services/stripe";
 
 import Image from "next/image";
-import avatarImg from "../../public/images/avatar.svg";
 
 import styles from "./home.module.scss";
 
 interface HomeProps {
   product: {
     priceId: string;
-    amount: number;
+    amount: string;
   };
 }
 
@@ -33,9 +32,14 @@ export default function Home({ product }: HomeProps) {
             Get access to all the publications <br />
             <span>for {product.amount} month</span>
           </p>
-          <SubscribeButton priceId={product.priceId} />
+          <SubscribeButton />
         </section>
-        <Image src={avatarImg} alt="Girl coding" />
+        <Image
+          src="/images/avatar.svg"
+          width="336"
+          height="521"
+          alt="Girl coding"
+        />
       </main>
     </>
   );

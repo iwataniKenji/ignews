@@ -90,3 +90,4 @@ $ yarn dev
 - [x] <a href="https://stripe.com/">Stripe</a>
 - [x] <a href="https://fauna.com/">FaunaDB</a>
 - [x] <a href="https://jamstack.org/">JAMStack</a>
+- [x] <a href="https://jestjs.io/">Jest</a>
