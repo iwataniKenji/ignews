@@ -20,8 +20,14 @@
 
 <p>Ig.news is a serverless website based on Next.js framework usage and has an authentication functionality that allows the user to get access to written content about the ReactJS world if he is logged in or a preview of the original content if he's not.</p>
 <p>The access is allowed trough a payed monthly subscription and the authentication uses Github to get the user's basic information.</p>
-<p>In conclusion, this application was used to implement and learn basic concepts of <strong>unit testing</strong> as well.</p>
-<p>This project is originally created on Ignite from <a href="https://www.rocketseat.com.br/">Rocketseat</a> and made by <a href="https://www.linkedin.com/in/kleverson-kenji-iwatani/">Kenji Iwatani</a></p>
+<p>In conclusion, this application was used to implement and learn unit testing basic concepts and tips on how to set <a href="https://vercel.com/">Vercel</a> config and environment variables settings.</p>
+<p>This project is originally created on Ignite from <a href="https://www.rocketseat.com.br/">Rocketseat</a>
+ and made by <a href="https://www.linkedin.com/in/kleverson-kenji-iwatani/">Kenji Iwatani</a></p>
+
+<p>
+    <h3><a href="https://ignews-kenji.vercel.app/">Check website &rarr;</a></h3>
+</p>
+
 
 ---
 
@@ -108,3 +114,4 @@ $ yarn test
 - [x] <a href="https://fauna.com/">FaunaDB</a>
 - [x] <a href="https://jamstack.org/">JAMStack</a>
 - [x] <a href="https://jestjs.io/">Jest</a>
+- [x] <a href="https://vercel.com/">Vercel</a>
